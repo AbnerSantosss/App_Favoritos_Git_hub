@@ -1,0 +1,191 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+
+  --ff-primary: 'Poppins', sans-serif;
+  --text-color: #E1E1E6;
+  --hue: 194;
+  --primary-color: #06181C;
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: #2F2F33;
+}
+
+body * {
+  /*Essa configuração diz que todos os seletores dentro do body terão as configurações a baixo*/
+  font-family: var(--ff-primary);
+}
+
+
+
+.sr-only {
+  /*O objetivo aqui é espremer o objeto, fazendo com que ele ainda exista mas meio que invisivel*/
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  /* overflow faz com que a caixa não trasborde na para a tela, empurrando os elementos*/
+  clip: rect(0, 0, 0, 0);
+  /*Aqui estou meio que trasformando em um retando, mas como estou setando tudo zerop, vai ser um retangulo que não vai aparecer*/
+  white-space: nowrap;
+  border-width: 0;
+}
+
+#app {
+  margin: 0 auto;
+  padding: 2rem;
+  width: 78%;
+  position: relative;
+ 
+  
+
+}
+
+/*=============================HEADER============================*/
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+/*=============================SEARCH============================*/
+.search {
+  display: flex;
+  text-align: center;
+  gap: 8px;
+}
+
+.search input {
+  height: 3.2rem;
+  border: 1px solid #ccc;
+  border-radius: .4rem 0 0 .4rem;
+  padding: 0 0.8rem;
+}
+
+.search button {
+  background-color: #065E7C;
+  height: 3.2rem;
+  border: none;
+  padding: 0 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px 8px;
+}
+
+
+
+.search button:hover {
+  filter: brightness(1.1);
+}
+
+/*=============================TABLE============================*/
+
+table {
+  width: 100%;
+  margin: 2rem auto;
+  box-shadow: 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
+  border: 1px solid #4A808C;
+  border-radius: 8px 8px;
+  height: 14.9rem; 
+}
+  
+
+
+
+table * {
+  /*Setando configurações gerais para toda table*/
+  font-size: 1.4rem;
+  color: var(--text-color);
+}
+
+table th {
+  background: var(--primary-color);
+  text-align: left;
+  font-weight: normal;
+  padding: 1.5rem;
+}
+
+table th:first-child {
+  /*Aqui estou acessando os filhos do th, nesse caso estou pegando o primeiro e aplicando a estilização a baixo*/
+  border-top-left-radius: .4rem;
+}
+
+table th:last-child {
+  /*Aqui estou pegando o ultimo filho*/
+  border-top-right-radius: .4rem;
+}
+
+table td {
+  padding: 1.5rem;
+  text-align: left;
+}
+
+table tr:nth-child(even) {
+  background: #06181C;
+}
+
+table tr:nth-child(odd) {
+  /*tudo que é ivan é par e tudo que for odd é par*/
+  background: #030B0D;
+}
+
+
+/*====================TD-User-========================*/
+
+
+td.user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+td.user img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+td.user a {
+  text-decoration: none;
+}
+
+td.user a p {
+  font-weight: bold;
+}
+
+/*- burron-*/
+td .remove {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}
+
+.infor {
+  position: absolute;
+  top: 28.8rem;
+  height: 28.8rem;
+  right: 53.3rem;
+
+}
+.infor h1{
+  color: #065E7C;
+}
