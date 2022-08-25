@@ -60,7 +60,6 @@ export class FavoritesView extends Favorites {
     super(root) //o supper faz herdar tudo q tem no construtor da classe mãe!
 
     this.tbody = this.root.querySelector('table tbody')
-
     this.update()
 
     this.onadd()
