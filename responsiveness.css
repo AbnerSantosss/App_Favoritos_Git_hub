@@ -1,22 +1,101 @@
-@media (max-width: 450px){
-header {
-  
+@media (max-width: 362px) {
+
+
+  header {
+
     display: flex;
-    align-items: center;
-  
     display: flex;
     flex-direction: column;
     gap: 2.0rem;
+    align-items: center;
+
   }
-table{
-  margin-left: -5.2rem;
-}
-table * {
-font-size: 9px;
+
+
+  table {
+    margin-left: -5.2rem;
+  }
+
+
+  table * {
+    font-size: 9px;
+  }
+
+  table td {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  table td {
+    padding: 3px;
+  }
 
 }
-table td {
-  padding: 3px;
 
+
+@media (min-width: 363px) and (max-width: 498px) {
+
+
+  header {
+
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    gap: 2.0rem;
+    align-items: center;
+
+  }
+
+  table {
+    margin-left: -5.2rem;
+  }
+
+  table td {
+    padding: 1.5rem;
+    text-align: center;
+
+  }
+
+  table * {
+    font-size: 9px;
+
+  }
+
+  table td {
+    padding: 3px;
+
+  }
 }
+
+@media (min-width: 499px) and (max-width: 810px) {
+
+
+  header {
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    gap: 2.0rem;
+    align-items: center;
+  }
+
+  table {
+    margin-left: -1.2rem;
+  }
+
+
+  table td {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+
+  table * {
+    font-size: 9px;
+  }
+
+
+  table td {
+    padding: 3px;
+  }
+
 }
