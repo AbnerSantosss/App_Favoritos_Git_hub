@@ -1,17 +1,5 @@
-export class Githubuser {
-  static search(username) {
-    const endpoit = `https://api.github.com/users/${username}`
+import { Githubuser } from './GithubUser.js'
 
-    return fetch(endpoit)
-      .then(data => data.json())
-      .then(({ login, name, public_repos, followers }) => ({
-        login,
-        name,
-        public_repos,
-        followers
-      }))
-  }
-}
 //Aqui é onde os dados serão estruturados, onde recebe a lógica//
 export class Favorites {
   constructor(root) {
@@ -27,12 +15,42 @@ export class Favorites {
     this.entries = JSON.parse(localStorage.getItem('@github-favorites:')) || []
   }
 
+  save() {
+    localStorage.setItem('@github-favorites:', JSON.stringify(this.entries))
+  }
+
+  //Função assincrona que recebe oq foi digitado no input, e insere no classe que consulta a API
+  async add(username) {
+    try {
+      const userExists = this.entries.find(entry => entry.login === username)
+
+      if (userExists) {
+        throw new Error('usuario já existe')
+      }
+
+      const user = await Githubuser.search(username)
+
+      if (user.login === undefined) {
+        throw new Error('usuario não encontrado')
+      }
+
+      this.entries = [user, ...this.entries] //operador spreed operator (estou pegando o user que é o novo usuario e estou jogando ele dentro do entries formando um novo array, imultabilidade!)
+
+      this.update() //depois de adicionar temos que chamar o update.//
+      this.save()
+    } catch (error) {
+      //eu uso o catch, Se não achar o promessa o vou execultar esse codigo a baixo,
+      alert(error.message)
+    }
+  }
+
   delete(user) {
     const filteredEntries = this.entries.filter(
       entry => entry.login !== user.login //usando o filter para percorrer o array, e executando a função que nela eu comparo o login de do que está no array com oq está na tela, se retornar positivo ele vai apagar e retornar outro array atualizado sem o objeto que foi selecionadom.
     )
     this.entries = filteredEntries // Aqui estou atribuindo o array que fopi filtrado para o array principal, meio que substituindo o velho pelo novo atualizado//
     this.update() //para carregar novamente os dados
+    this.save() //tenho que salvar no local storage para quando recarregar não está com os dados novamente, no caso ele salvar também oq foi deletado!
   }
 }
 
@@ -45,20 +63,6 @@ export class FavoritesView extends Favorites {
 
     this.update()
     this.onadd()
-  }
-
-  //Função assincrona que recebe oq foi digitado no input, e insere no classe que consulta a API
-  async add(username) {
-    try {
-      const user = await Githubuser.search(username)
-
-      if (user.login === undefined) {
-        throw new Error('usuario não encontrado')
-      }
-    } catch (error) {
-      //eu uso o catch, Se não achar o promessa o vou execultar esse codigo a baixo,
-      alert(error.message)
-    }
   }
 
   //função de ouvir o evento do botão e pegar oq está no input do botão
@@ -91,6 +95,7 @@ export class FavoritesView extends Favorites {
       row.querySelector('.user span').textContent = user.login
       row.querySelector('.repositories').textContent = user.public_repos
       row.querySelector('.followers').textContent = user.followers
+      row.querySelector('.user a').href = `https://github.com/${user.login}`
 
       //Aqui estou acessando o botão remove, ouvindo o click dele e executando uma função, nessa função estou usando o confirm para me retornar verdadeiro ou falso, e armazenando isso em uma constante, e essa constando voou colocar em um if para dentro do if usar a lógica de deletar!
       row.querySelector('.remove').onclick = () => {
