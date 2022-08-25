@@ -1,26 +1,38 @@
+export class Githubuser {
+  static search(username) {
+    const endpoit = `https://api.github.com/users/${username}`
+
+    return fetch(endpoit)
+      .then(data => data.json())
+      .then(({ login, name, public_repos, followers }) => ({
+        login,
+        name,
+        public_repos,
+        followers
+      }))
+  }
+}
+//Aqui é onde os dados serão estruturados, onde recebe a lógica//
 export class Favorites {
   constructor(root) {
     this.root = document.querySelector(root) // Nessa classse eu estou pegando meu app, no caso onde vou renderizar as tabelas
 
     this.load()
+
+    Githubuser.search('diego3g').then(user => console.log(user))
   }
 
   load() {
     //Aqui são os dados para carregamento, no caso dados que eu recebo e tenho que carregar
-    this.entries = [
-      {
-        login: 'maykbrito',
-        name: 'mayk brito',
-        public_repos: '76',
-        followers: '75'
-      },
-      {
-        login: 'abnersantos',
-        name: 'mayk brito',
-        public_repos: '75',
-        followers: '250'
-      }
-    ]
+    this.entries = JSON.parse(localStorage.getItem('@github-favorites:')) || []
+  }
+
+  delete(user) {
+    const filteredEntries = this.entries.filter(
+      entry => entry.login !== user.login //usando o filter para percorrer o array, e executando a função que nela eu comparo o login de do que está no array com oq está na tela, se retornar positivo ele vai apagar e retornar outro array atualizado sem o objeto que foi selecionadom.
+    )
+    this.entries = filteredEntries // Aqui estou atribuindo o array que fopi filtrado para o array principal, meio que substituindo o velho pelo novo atualizado//
+    this.update() //para carregar novamente os dados
   }
 }
 
@@ -32,6 +44,31 @@ export class FavoritesView extends Favorites {
     this.tbody = this.root.querySelector('table tbody')
 
     this.update()
+    this.onadd()
+  }
+
+  //Função assincrona que recebe oq foi digitado no input, e insere no classe que consulta a API
+  async add(username) {
+    try {
+      const user = await Githubuser.search(username)
+
+      if (user.login === undefined) {
+        throw new Error('usuario não encontrado')
+      }
+    } catch (error) {
+      //eu uso o catch, Se não achar o promessa o vou execultar esse codigo a baixo,
+      alert(error.message)
+    }
+  }
+
+  //função de ouvir o evento do botão e pegar oq está no input do botão
+  onadd() {
+    const addButton = this.root.querySelector('.button')
+
+    addButton.onclick = () => {
+      const { value } = this.root.querySelector('.search input')
+      this.add(value)
+    }
   }
 
   update() {
@@ -58,6 +95,9 @@ export class FavoritesView extends Favorites {
       //Aqui estou acessando o botão remove, ouvindo o click dele e executando uma função, nessa função estou usando o confirm para me retornar verdadeiro ou falso, e armazenando isso em uma constante, e essa constando voou colocar em um if para dentro do if usar a lógica de deletar!
       row.querySelector('.remove').onclick = () => {
         const isok = confirm('Tem certeza que deseja deletar essa inha?')
+        if (isok) {
+          this.delete(user)
+        }
       }
 
       this.tbody.append(row) //append é uma funcionalidade nativa, que recebe um elemento html criado com a DOM, para renderizar esse elemento
