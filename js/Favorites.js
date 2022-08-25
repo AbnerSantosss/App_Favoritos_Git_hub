@@ -63,7 +63,6 @@ export class FavoritesView extends Favorites {
     this.update()
 
     this.onadd()
-    console.log('olá')
   }
 
   //função de ouvir o evento do botão e pegar oq está no input do botão
