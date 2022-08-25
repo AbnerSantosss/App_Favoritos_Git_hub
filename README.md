@@ -1,5 +1,5 @@
 <div align="center">
- <h1> 📋Favoritos Github 📋 </h1>
+ <h1> ✅Favoritos Github ✅ </h1>
  <p>Projeto que o usuário pode favoritar perfis do github</P>
  </div>
 
