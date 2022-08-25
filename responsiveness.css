@@ -1,0 +1,22 @@
+@media (max-width: 450px){
+header {
+  
+    display: flex;
+    align-items: center;
+  
+    display: flex;
+    flex-direction: column;
+    gap: 2.0rem;
+  }
+table{
+  margin-left: -5.2rem;
+}
+table * {
+font-size: 9px;
+
+}
+table td {
+  padding: 3px;
+
+}
+}
